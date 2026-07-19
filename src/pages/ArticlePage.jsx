@@ -45,7 +45,14 @@ function chunkContent(html, perChunk = 3) {
 // mid-article. dangerouslySetInnerHTML never executes the <script> tags
 // inside that stored snippet, so this splits each chunk around those
 // placeholder divs and renders a live <EmbedHtml> in their place instead.
-const EMBED_BLOCK_RE = /<div[^>]*\sdata-embed-html="([^"]*)"[^>]*>[\s\S]*?<\/div>/g
+// Matches the admin's <tave-embed> block (see InlineEmbedBlot in
+// ArticleEditor.jsx). This used to match a generic <div>, but that
+// collided with Quill's paste handling: any pasted plain <div> (which is
+// how Word/Google Docs/many sites wrap ordinary paragraphs) was getting
+// misidentified as an embed block. The admin now writes a distinct,
+// hyphenated custom tag that real paste sources never produce, so this
+// regex was updated to match it specifically instead.
+const EMBED_BLOCK_RE = /<tave-embed[^>]*\sdata-embed-html="([^"]*)"[^>]*>[\s\S]*?<\/tave-embed>/g
 
 function splitEmbeds(html) {
   const segments = []
@@ -210,8 +217,13 @@ export default function ArticlePage() {
 
             {/* Featured Image — edge-to-edge on mobile, contained + rounded on desktop */}
             {article.featuredImage?.embedHtml ? (
-              <figure className="-mx-4 sm:-mx-6 lg:mx-0 mb-6 flex justify-center">
+              <figure className="-mx-4 sm:-mx-6 lg:mx-0 mb-6 flex flex-col items-center">
                 <EmbedHtml html={article.featuredImage.embedHtml} className="w-full" />
+                {article.featuredImage.credit && (
+                  <figcaption className="w-full text-center text-gray-500 text-xs mt-1.5 px-4 sm:px-6 lg:px-0">
+                    {article.featuredImage.credit}
+                  </figcaption>
+                )}
               </figure>
             ) : article.featuredImage?.url && (
               <figure className="-mx-4 sm:-mx-6 lg:mx-0 mb-6">
@@ -220,6 +232,11 @@ export default function ArticlePage() {
                   alt={article.featuredImage.alt || article.title}
                   className="w-full aspect-video lg:rounded-xl object-cover"
                 />
+                {article.featuredImage.credit && (
+                  <figcaption className="text-gray-500 text-xs mt-1.5 px-4 sm:px-6 lg:px-0">
+                    {article.featuredImage.credit}
+                  </figcaption>
+                )}
               </figure>
             )}
 
