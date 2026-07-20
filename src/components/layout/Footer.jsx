@@ -9,9 +9,9 @@ const socials = [
 ]
 
 const sections = [
-  { title: 'News', links: [{ to: '/nigeria', label: 'Nigeria' }, { to: '/africa', label: 'Africa' }, { to: '/world', label: 'World' }, { to: '/entertainment', label: 'Entertainment' }] },
-  { title: 'More', links: [{ to: '/tech', label: 'Tech' }, { to: '/business', label: 'Business' }, { to: '/lifestyle', label: 'Lifestyle' }, { to: '/opinion', label: 'Opinion' }] },
-  { title: 'Company', links: [{ to: '/about', label: 'About Us' }, { to: '/contact', label: 'Contact' }, { to: '/advertise', label: 'Advertise' }, { to: '/careers', label: 'Careers' }] },
+  { title: 'News', links: [{ to: '/sports', label: 'Sports' }, { to: '/africa', label: 'Africa' }, { to: '/world', label: 'World' }, { to: '/entertainment', label: 'Entertainment' }] },
+  { title: 'More', links: [{ to: '/tech', label: 'Tech' }, { to: '/business', label: 'Business' }, { to: '/lifestyle', label: 'Lifestyle' }] },
+  { title: 'Company', links: [{ to: '/about', label: 'About Us' }, { to: '/contact', label: 'Contact' }, { to: '/contact', label: 'Advertise' }] },
 ]
 
 export default function Footer() {
@@ -36,7 +36,7 @@ export default function Footer() {
               <h4 className="text-white text-xs font-bold uppercase tracking-widest mb-4">{section.title}</h4>
               <ul className="space-y-2">
                 {section.links.map(link => (
-                  <li key={link.to}><Link to={link.to} className="text-gray-500 text-sm hover:text-white transition-colors">{link.label}</Link></li>
+                  <li key={link.label}><Link to={link.to} className="text-gray-500 text-sm hover:text-white transition-colors">{link.label}</Link></li>
                 ))}
               </ul>
             </div>
@@ -45,8 +45,11 @@ export default function Footer() {
         <div className="border-t border-gray-800 pt-6 flex flex-col sm:flex-row justify-between items-center gap-3">
           <p className="text-gray-600 text-xs">© {new Date().getFullYear()} Tave News. All rights reserved.</p>
           <div className="flex gap-4">
-            {['Privacy Policy', 'Terms of Use', 'Cookie Settings'].map(l => (
-              <a key={l} href="#" className="text-gray-600 text-xs hover:text-gray-400 transition-colors">{l}</a>
+            {[
+              { label: 'Privacy Policy', to: '/privacy-policy' },
+              { label: 'Terms of Use', to: '/terms-of-use' },
+            ].map(l => (
+              <Link key={l.label} to={l.to} className="text-gray-600 text-xs hover:text-gray-400 transition-colors">{l.label}</Link>
             ))}
           </div>
         </div>

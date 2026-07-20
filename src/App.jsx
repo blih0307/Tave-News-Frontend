@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { Toaster } from 'react-hot-toast'
 import Layout from './components/layout/Layout'
 import Analytics from './components/Analytics'
+import CookieConsent from './components/CookieConsent'
 import { MonetizationProvider } from './context/MonetizationContext'
 import Home from './pages/Home'
 import ArticlePage from './pages/ArticlePage'
@@ -9,12 +10,15 @@ import CategoryPage from './pages/CategoryPage'
 import SearchPage from './pages/SearchPage'
 import About from './pages/About'
 import Contact from './pages/Contact'
+import PrivacyPolicy from './pages/PrivacyPolicy'
+import TermsOfUse from './pages/TermsOfUse'
 import NotFound from './pages/NotFound'
 
 export default function App() {
   return (
     <BrowserRouter>
       <Analytics />
+      <CookieConsent />
       <MonetizationProvider>
         <Layout>
           <Routes>
@@ -23,6 +27,8 @@ export default function App() {
             <Route path="/search" element={<SearchPage />} />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+            <Route path="/terms-of-use" element={<TermsOfUse />} />
             {/* Catches both top-level category paths (/world) and any nested
                 subnav path (/world/africa, /business/markets/oil, ...) --
                 CategoryPage looks the page up by its LAST path segment, so a

@@ -188,7 +188,7 @@ export default function Navbar() {
               </div>
             </Link>
 
-            <Link to="/newsletter" className="hidden md:block bg-black text-white px-3 py-1.5 rounded-lg text-xs font-bold hover:bg-gray-800 transition-colors">Subscribe</Link>
+            <Link to="/contact" className="hidden md:block bg-black text-white px-3 py-1.5 rounded-lg text-xs font-bold hover:bg-gray-800 transition-colors">Subscribe</Link>
 
             <div className="md:hidden flex items-center gap-1">
               <button onClick={() => setSearchOpen(o => !o)} className="text-black p-1.5">
@@ -239,7 +239,7 @@ export default function Navbar() {
               {topNav.map(item => (
                 <MobileNavItem key={item.to} item={item} onNavigate={() => setMenuOpen(false)} />
               ))}
-              <Link to="/newsletter" onClick={() => setMenuOpen(false)} className="block bg-black text-white text-center px-3 py-2.5 rounded-lg text-sm font-bold mt-2">Subscribe</Link>
+              <Link to="/contact" onClick={() => setMenuOpen(false)} className="block bg-black text-white text-center px-3 py-2.5 rounded-lg text-sm font-bold mt-2">Subscribe</Link>
             </div>
           </div>
         )}
