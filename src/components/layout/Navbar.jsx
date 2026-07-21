@@ -166,7 +166,7 @@ export default function Navbar() {
 
   return (
     <>
-      <header ref={headerRef} className={`fixed top-0 left-0 right-0 z-50 transition-shadow ${scrolled ? 'shadow-lg' : ''}`}>
+      <header ref={headerRef} className={`fixed top-0 left-0 right-0 z-[2147483647] transition-shadow ${scrolled ? 'shadow-lg' : ''}`}>
         {/* Top bar */}
         <div className="bg-black text-gray-500 text-[11px] py-1">
           <div className="max-w-[1600px] mx-auto px-6 flex justify-between items-center">

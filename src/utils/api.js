@@ -16,6 +16,16 @@ export const getHomeFeed = (params = {}) => api.get('/articles/feed/home', { par
 export const cardImage = (entity) => entity?.featuredImage?.thumbnailUrl || entity?.featuredImage?.url || ''
 // Responsive embed (e.g. SmartFrame) for card/list views, if the article
 // has one -- takes priority over cardImage when set.
+//
+// IMPORTANT: do NOT fall back to the full featuredImage.embedHtml here.
+// That was tried and reverted -- Getty and SmartFrame widgets don't
+// gracefully shrink to fit a small card; they detect the constrained
+// size and refuse to render at all (SmartFrame shows its own literal
+// "This image cannot be fully rendered on this page" error box in that
+// case), which looks far worse than the plain placeholder below. The
+// real fix for an article whose only image is an embed is to also set a
+// dedicated card Thumbnail in the admin -- see the warning in
+// ArticleEditor.jsx's embed mode.
 export const cardEmbedHtml = (entity) => entity?.featuredImage?.thumbnailEmbedHtml || ''
 
 export const formatDate = (date) => new Date(date).toLocaleDateString('en-GB', {

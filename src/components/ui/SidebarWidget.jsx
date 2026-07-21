@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { getArticles, timeAgo, cardImage } from '../../utils/api'
+import { getArticles, timeAgo } from '../../utils/api'
+import { CardThumb } from './ArticleCard'
 import { HorizontalSkeleton } from './Skeleton'
 
 export default function SidebarWidget({ title = 'More News', limit = 5 }) {
@@ -25,11 +26,11 @@ export default function SidebarWidget({ title = 'More News', limit = 5 }) {
           : articles.map(article => (
             <Link key={article._id} to={`/article/${article.slug}`} className="group flex gap-3 hover:bg-gray-50 rounded-lg p-2 -mx-2 transition-colors">
               <div className="w-20 h-16 flex-shrink-0 rounded-lg overflow-hidden bg-gray-100">
-                {cardImage(article) ? (
-                  <img src={cardImage(article)} alt="" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
-                ) : (
-                  <div className="w-full h-full bg-gradient-to-br from-gray-200 to-gray-100" />
-                )}
+                <CardThumb
+                  article={article}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  placeholderClass="w-full h-full bg-gradient-to-br from-gray-200 to-gray-100"
+                />
               </div>
               <div className="min-w-0 flex-1">
                 <span className="bg-primary text-white text-[10px] font-bold uppercase px-1.5 py-0.5 rounded inline-block">{article.category?.name}</span>

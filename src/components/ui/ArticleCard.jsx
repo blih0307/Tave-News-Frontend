@@ -29,17 +29,33 @@ export default function ArticleCard({ article, variant = 'default', hideCategory
   if (!article) return null
 
   if (variant === 'featured') return (
-    <Link to={`/article/${article.slug}`} className="group block relative isolate overflow-hidden rounded-xl bg-dark">
-      <div className="relative aspect-video bg-surface overflow-hidden">
+    <Link to={`/article/${article.slug}`} className="group block relative overflow-hidden rounded-xl bg-dark">
+      {/* `isolate` contains any z-index used *inside* this box (harmless to
+          keep), but it can't help against SmartFrame specifically: SmartFrame
+          runs as a real Web Component directly in the main document (unlike
+          Getty's iframe below), and widgets built that way commonly render
+          their zoom/fullscreen/error overlay by appending it straight to
+          <body> with `position: fixed`. An element appended to <body> is not
+          a descendant of this box at all, so no local stacking-context trick
+          can contain it -- it competes directly at the document root, where
+          whichever sibling has the higher raw z-index wins. That's why the
+          headline was still losing after adding `isolate` alone. */}
+      <div className="relative isolate aspect-video bg-surface overflow-hidden">
         <HeroThumb
           article={article}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
           placeholderClass="w-full h-full bg-gradient-to-br from-surface to-gray-900 flex items-center justify-center text-gray-500 text-sm"
           placeholderText="No Image"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent z-10" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent z-[2147483645]" />
       </div>
-      <div className="absolute bottom-0 left-0 right-0 p-5 z-20">
+      {/* z-[2147483646], one below the header's z-index (the true browser
+          max, 2147483647). High enough to outrank a body-appended
+          third-party overlay at the document root, since containment
+          (isolate) alone can't reach something that isn't our descendant --
+          but never above our own sticky header, which must always win when
+          this hero scrolls up underneath it. */}
+      <div className="absolute bottom-0 left-0 right-0 p-5 z-[2147483646]">
         {article.isBreaking && <span className="bg-primary text-white text-xs font-bold px-2 py-0.5 rounded mb-2 inline-block">BREAKING</span>}
         <span className="bg-primary text-white text-xs font-bold px-2 py-0.5 rounded mb-2 inline-block ml-1">{article.category?.name}</span>
         <h2 className="text-white font-bold text-xl leading-tight group-hover:underline transition-colors line-clamp-2">{article.title}</h2>
