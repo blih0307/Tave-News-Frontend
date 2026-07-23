@@ -1,9 +1,10 @@
 import { XIcon, FacebookIcon, WhatsAppIcon, LinkIcon } from './SocialIcons'
 import toast from 'react-hot-toast'
 
-export default function ShareButtons({  url }) {
+export default function ShareButtons({ url, title = '' }) {
   const shareUrl = url || window.location.href
   const encoded = encodeURIComponent(shareUrl)
+  const encodedTitle = encodeURIComponent(title)
 
   const buttons = [
     { label: 'X', icon: XIcon, href: `https://twitter.com/intent/tweet?text=${encodedTitle}&url=${encoded}` },
