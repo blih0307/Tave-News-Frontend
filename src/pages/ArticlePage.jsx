@@ -222,7 +222,9 @@ export default function ArticlePage() {
             {/* Featured Image — edge-to-edge on mobile, contained + rounded on desktop */}
             {article.featuredImage?.embedHtml ? (
               <figure className="-mx-4 sm:-mx-6 lg:mx-0 mb-6 flex flex-col items-center">
-                <EmbedHtml html={article.featuredImage.embedHtml} className="w-full" />
+                <div className="w-full aspect-video lg:rounded-xl overflow-hidden">
+                  <EmbedHtml html={article.featuredImage.embedHtml} className="w-full h-full" />
+                </div>
                 {article.featuredImage.credit && (
                   <figcaption className="w-full text-center text-gray-500 text-xs mt-1.5 px-4 sm:px-6 lg:px-0">
                     {article.featuredImage.credit}
@@ -257,7 +259,9 @@ export default function ArticlePage() {
                   {splitEmbeds(chunk).map((seg, j) =>
                     seg.type === 'embed' ? (
                       <figure key={j} className="-mx-4 sm:-mx-6 lg:mx-0 my-6 flex justify-center">
-                        <EmbedHtml html={seg.value} className="w-full" />
+                        <div className="w-full aspect-video overflow-hidden">
+                          <EmbedHtml html={seg.value} className="w-full h-full" />
+                        </div>
                       </figure>
                     ) : (
                       seg.value.trim() && <div key={j} dangerouslySetInnerHTML={{ __html: seg.value }} />
